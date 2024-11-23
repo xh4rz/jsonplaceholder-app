@@ -10,7 +10,7 @@ import {
 	primaryColorRgb,
 	secondaryColorRgb,
 	thirdColor
-} from '../themeRegistry/theme';
+} from '../../themeRegistry/theme';
 import type { EnhancedTableProps, UserStore } from '@/ts';
 
 export const EnhancedTableHead = (props: EnhancedTableProps) => {

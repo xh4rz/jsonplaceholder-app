@@ -15,7 +15,7 @@ import {
 import WarningIcon from '@mui/icons-material/Warning';
 import { red } from '@mui/material/colors';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
-import { EnhancedTableHead, RowUsers } from '@/components/users';
+import { EnhancedTableHead, RowUsers } from '@/components/users/Table';
 import type { HeadCell, Order, UserStore } from '@/ts';
 
 const tableRowStyle = {

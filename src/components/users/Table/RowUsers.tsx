@@ -10,6 +10,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import type { HeadCell, UserStore } from '@/ts';
+import { useDialogsStore } from '@/store/dialogs/dialogs-store';
 
 const StyledTableRow = styled(TableRow)(() => ({
 	'&:nth-of-type(odd)': {
@@ -23,7 +24,14 @@ interface Props {
 }
 
 export const RowUsers = ({ i, headCells }: Props) => {
-	const { loadingUsers: loading } = useUsersStore();
+	const { loadingUsers: loading, getUserById } = useUsersStore();
+
+	const { setAddDialog } = useDialogsStore();
+
+	const handleEditUser = (id: number) => {
+		setAddDialog(true);
+		getUserById(id);
+	};
 
 	return (
 		<StyledTableRow
@@ -47,7 +55,7 @@ export const RowUsers = ({ i, headCells }: Props) => {
 
 					<TableCell align="center">
 						<Tooltip title="Editar Usuario" placement="right">
-							<IconButton /* onClick={() => handleConsult(i.id)} */>
+							<IconButton onClick={() => handleEditUser(i.id)}>
 								<EditIcon color="primary" />
 							</IconButton>
 						</Tooltip>

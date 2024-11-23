@@ -1,18 +1,14 @@
 import { forwardRef, ReactElement, Ref } from 'react';
 import {
 	Dialog,
-	DialogActions,
 	DialogContent,
 	DialogProps,
 	DialogTitle,
-	Grid2,
 	IconButton,
 	Slide
 } from '@mui/material';
-// import { CustomButton } from '../form';
-import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
-import { secondaryColor } from '../themeRegistry/theme';
+import { primaryColor } from '../themeRegistry/theme';
 import { TransitionProps } from '@mui/material/transitions';
 
 const Transition = forwardRef(function Transition(
@@ -31,12 +27,11 @@ const Transition = forwardRef(function Transition(
 	);
 });
 interface Props {
-	title: 'string';
+	title: string;
 	openDialog: boolean;
 	handleCloseDialog: () => void;
-	optionsButtons: boolean;
-	maxWidth: DialogProps['maxWidth'];
-	fullScreen: boolean;
+	maxWidth?: DialogProps['maxWidth'];
+	fullScreen?: boolean;
 	children: JSX.Element;
 }
 
@@ -44,7 +39,6 @@ export const CustomDialog = ({
 	title,
 	openDialog,
 	handleCloseDialog,
-	optionsButtons = true,
 	maxWidth = 'sm',
 	fullScreen = false,
 	children
@@ -62,7 +56,7 @@ export const CustomDialog = ({
 				sx={{
 					m: 0,
 					p: 2,
-					bgcolor: secondaryColor,
+					bgcolor: primaryColor,
 					textAlign: 'center',
 					color: 'white'
 				}}
@@ -87,28 +81,6 @@ export const CustomDialog = ({
 			>
 				{children}
 			</DialogContent>
-
-			{/* {optionsButtons && (
-				<DialogActions>
-					<Grid container spacing={2} justifyContent="center">
-						<Grid item xs={4}>
-							<CustomButton
-								title="Enviar"
-								icon={SaveIcon}
-								type="submit"
-								form="dialog-form"
-							/>
-						</Grid>
-						<Grid item xs={4}>
-							<CustomButton
-								title="Cancelar"
-								icon={CloseIcon}
-								onHandleClick={handleCloseDialog}
-							/>
-						</Grid>
-					</Grid>
-				</DialogActions>
-			)} */}
 		</Dialog>
 	);
 };
