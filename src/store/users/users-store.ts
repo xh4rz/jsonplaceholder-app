@@ -3,24 +3,13 @@ import { AxiosError } from 'axios';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { showToast, timeout } from '@/utils';
-import type { User } from '@/ts/json-placeholder-data';
+import type { User, UserStore } from '@/ts';
 
 interface State {
 	users: UserStore[];
 	cleanUsers: () => void;
 	loadingUsers: boolean;
 	getUsers: () => Promise<void>;
-}
-
-interface UserStore {
-	id: number;
-	name: string;
-	username: string;
-	email: string;
-	city: string;
-	company: string;
-	phone: string;
-	website: string;
 }
 
 export const useUsersStore = create<State>()(
@@ -33,21 +22,10 @@ export const useUsersStore = create<State>()(
 
 				if (data.length !== 0) {
 					const dataUsers = data.map(
-						({
+						({ id, name, email, address, phone, website }) => ({
 							id,
 							name,
-							username,
 							email,
-							address,
-							company,
-							phone,
-							website
-						}) => ({
-							id,
-							name,
-							username,
-							email,
-							company: company.name,
 							city: address.city,
 							phone,
 							website
