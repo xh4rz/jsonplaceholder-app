@@ -1,23 +1,45 @@
 import { CustomDialog } from '@/components/dialog/CustomDialog';
+import {
+	FormAddUser,
+	FormDeleteUser,
+	FormEditUser
+} from '@/components/users/DialogForm';
 import { useDialogsStore } from '@/store/dialogs/dialogs-store';
-import { useUsersStore } from '@/store/users/users-store';
-import { useState } from 'react';
-import { User } from '../../../ts/json-placeholder.interface';
 
 export const DialogUsers = () => {
-	const { addDialog, setAddDialog } = useDialogsStore();
-
-	const { user } = useUsersStore();
+	const {
+		addDialog,
+		setAddDialog,
+		editDialog,
+		setEditDialog,
+		deleteDialog,
+		setDeleteDialog
+	} = useDialogsStore();
 
 	return (
 		<div>
 			<CustomDialog
-				title="Editar Usuario"
+				title="Agregar Usuario"
 				openDialog={addDialog}
 				handleCloseDialog={() => setAddDialog(false)}
 			>
-				<p> {JSON.stringify(user)}</p>
-				{/* <ContentUser user={user} setValidateUser={setValidateUser} /> */}
+				<FormAddUser />
+			</CustomDialog>
+
+			<CustomDialog
+				title="Editar Usuario"
+				openDialog={editDialog}
+				handleCloseDialog={() => setEditDialog(false)}
+			>
+				<FormEditUser />
+			</CustomDialog>
+
+			<CustomDialog
+				title="Eliminar Usuario"
+				openDialog={deleteDialog}
+				handleCloseDialog={() => setDeleteDialog(false)}
+			>
+				<FormDeleteUser />
 			</CustomDialog>
 		</div>
 	);

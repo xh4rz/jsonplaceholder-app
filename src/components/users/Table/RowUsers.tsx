@@ -24,13 +24,22 @@ interface Props {
 }
 
 export const RowUsers = ({ i, headCells }: Props) => {
-	const { loadingUsers: loading, getUserById } = useUsersStore();
+	const {
+		loadingUsers: loading,
+		setUserEditId,
+		setUserDeleteId
+	} = useUsersStore();
 
-	const { setAddDialog } = useDialogsStore();
+	const { setEditDialog, setDeleteDialog } = useDialogsStore();
 
 	const handleEditUser = (id: number) => {
-		setAddDialog(true);
-		getUserById(id);
+		setEditDialog(true);
+		setUserEditId(id);
+	};
+
+	const handleDeleteUser = (id: number) => {
+		setDeleteDialog(true);
+		setUserDeleteId(id);
 	};
 
 	return (
@@ -63,7 +72,7 @@ export const RowUsers = ({ i, headCells }: Props) => {
 
 					<TableCell align="center">
 						<Tooltip title="Eliminar Usuario" placement="left">
-							<IconButton /* onClick={() => handleConsult(i.id)} */>
+							<IconButton onClick={() => handleDeleteUser(i.id)}>
 								<DeleteIcon color={'error'} />
 							</IconButton>
 						</Tooltip>

@@ -3,19 +3,23 @@ import { AxiosError } from 'axios';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { showToast, timeout } from '@/utils';
+import { useDialogsStore } from '../dialogs/dialogs-store';
 import type { User, UserStore } from '@/ts';
 
 interface State {
 	users: UserStore[];
 	user: UserStore;
 	loadingUsers: boolean;
-	cleanUsers: () => void;
+	userDeleteId: number;
 	getUsers: () => Promise<void>;
-	getUserById: (idUser: number) => Promise<void>;
+	setUserEditId: (idUser: number) => void;
+	setUserDeleteId: (idUser: number) => void;
+	updateUser: (data: UserStore) => Promise<void>;
+	deleteUser: () => Promise<void>;
 }
 
 export const useUsersStore = create<State>()(
-	devtools((set) => ({
+	devtools((set, get) => ({
 		users: [],
 		user: {
 			id: 0,
@@ -26,6 +30,7 @@ export const useUsersStore = create<State>()(
 			website: ''
 		},
 		loadingUsers: true,
+		userDeleteId: 0,
 		getUsers: async () => {
 			try {
 				const { data } = await axiosClient.get<User[]>('/users');
@@ -48,11 +53,14 @@ export const useUsersStore = create<State>()(
 
 					await timeout(2000);
 
-					showToast('Se ha encontrado información.', 'success');
+					showToast('Se ha encontrado información de los usuarios.', 'success');
 				} else {
 					set({ users: [] });
 
-					showToast('No se ha encontrado información.', 'error');
+					showToast(
+						'No se ha encontrado información de los usuarios.',
+						'error'
+					);
 				}
 			} catch (error) {
 				const err = error as AxiosError<Error>;
@@ -66,30 +74,74 @@ export const useUsersStore = create<State>()(
 				set({ loadingUsers: false });
 			}
 		},
-		getUserById: async (idUser) => {
-			try {
-				const {
-					data: { id, name, email, address, phone, website }
-				} = await axiosClient.get<User>(`/users/${idUser}`);
 
-				set({
-					user: {
-						id,
-						name,
-						email,
-						city: address.city,
-						phone,
-						website
+		setUserEditId: (idUser) => {
+			const { users } = get();
+
+			const findUser = users.find((i) => i.id === idUser);
+
+			set({
+				user: findUser
+			});
+
+			showToast(
+				`Se ha encontrado información con el Id: ${findUser!.id}`,
+				'success'
+			);
+		},
+
+		updateUser: async (dataUser) => {
+			try {
+				const { data } = await axiosClient.put(
+					`/users/${dataUser.id}`,
+					dataUser
+				);
+
+				const { users } = get();
+
+				const updateUsers = users.map((i) => {
+					if (i.id === dataUser.id) {
+						return data;
 					}
+
+					return i;
 				});
 
-				showToast(`Se ha encontrado información con el Id: ${id}`, 'success');
+				set({ users: updateUsers });
+
+				showToast(
+					`Se ha actualizado el usuario con el Id ${data.id}`,
+					'success'
+				);
+
+				useDialogsStore.getState().setEditDialog(false);
 			} catch (error) {
-				showToast('No se ha encontrado información.', 'error');
+				showToast('No se ha podido actualizar el usuario.', 'error');
 			}
 		},
-		cleanUsers: () => {
-			set({ users: [] });
+
+		setUserDeleteId: (idUser) => {
+			set({ userDeleteId: idUser });
+		},
+
+		deleteUser: async () => {
+			const { userDeleteId } = get();
+
+			try {
+				await axiosClient.delete(`/users/${userDeleteId}`);
+
+				const { users } = get();
+
+				const filterUsers = users.filter((i) => i.id !== userDeleteId);
+
+				set({ users: filterUsers });
+
+				showToast(`Se ha eliminado el usuario.`, 'success');
+
+				useDialogsStore.getState().setDeleteDialog(false);
+			} catch (error) {
+				showToast('No se ha podido eliminar el usuario.', 'error');
+			}
 		}
 	}))
 );

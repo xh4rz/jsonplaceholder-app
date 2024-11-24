@@ -51,27 +51,27 @@ function getComparator<Key extends keyof any>(
 const headCells: readonly HeadCell[] = [
 	{
 		id: 'id',
-		label: 'ID'
+		label: 'Id'
 	},
 	{
 		id: 'name',
-		label: 'Name'
+		label: 'Nombre'
 	},
 	{
 		id: 'email',
-		label: 'Email'
+		label: 'Correo'
 	},
 	{
 		id: 'city',
-		label: 'City'
+		label: 'Ciudad'
 	},
 	{
 		id: 'phone',
-		label: 'Phone'
+		label: 'Teléfono'
 	},
 	{
 		id: 'website',
-		label: 'Website'
+		label: 'Sitio Web'
 	},
 	{
 		id: '',

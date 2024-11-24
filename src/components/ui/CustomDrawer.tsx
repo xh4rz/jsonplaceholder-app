@@ -16,13 +16,12 @@ import {
 	styled,
 	useTheme
 } from '@mui/material';
+import { primaryColor, thirdColor } from '../themeRegistry/theme';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { FaUserClock } from 'react-icons/fa';
-import { MdContentPasteSearch } from 'react-icons/md';
+import PeopleIcon from '@mui/icons-material/People';
 import type { IconType } from 'react-icons';
 import type { OverridableComponent } from '@mui/material/OverridableComponent';
-import { primaryColor, thirdColor } from '../themeRegistry/theme';
 
 const drawerWidth = 330;
 
@@ -63,14 +62,8 @@ export const CustomDrawer = ({ openDrawer, setOpenDrawer }: Props) => {
 		{
 			id: 1,
 			title: 'Usuarios',
-			icon: MdContentPasteSearch,
+			icon: PeopleIcon,
 			href: '/users'
-		},
-		{
-			id: 2,
-			title: 'Posts',
-			icon: FaUserClock,
-			href: '/posts'
 		}
 	]);
 
