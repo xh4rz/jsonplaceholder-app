@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import { CustomDialog } from '@/components/dialog/CustomDialog';
 import {
 	FormAddUser,
@@ -17,7 +18,7 @@ export const DialogUsers = () => {
 	} = useDialogsStore();
 
 	return (
-		<div>
+		<Box>
 			<CustomDialog
 				title="Agregar Usuario"
 				openDialog={addDialog}
@@ -41,6 +42,6 @@ export const DialogUsers = () => {
 			>
 				<FormDeleteUser />
 			</CustomDialog>
-		</div>
+		</Box>
 	);
 };
