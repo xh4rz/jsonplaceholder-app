@@ -46,7 +46,8 @@ export const FormEditUser = () => {
 					fullWidth
 					required={true}
 					{...register('name', {
-						required: 'Campo requerido'
+						required: 'Campo requerido',
+						setValueAs: (value: string) => value.trim()
 					})}
 					type="text"
 					variant="outlined"
@@ -65,7 +66,8 @@ export const FormEditUser = () => {
 						pattern: {
 							value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
 							message: 'Ingrese dirección de correo electrónico válida'
-						}
+						},
+						setValueAs: (value: string) => value.trim()
 					})}
 					type="text"
 					variant="outlined"
@@ -80,7 +82,8 @@ export const FormEditUser = () => {
 					fullWidth
 					required={true}
 					{...register('city', {
-						required: 'Campo requerido'
+						required: 'Campo requerido',
+						setValueAs: (value: string) => value.trim()
 					})}
 					type="text"
 					variant="outlined"
@@ -95,7 +98,8 @@ export const FormEditUser = () => {
 					fullWidth
 					required={true}
 					{...register('phone', {
-						required: 'Campo requerido'
+						required: 'Campo requerido',
+						setValueAs: (value: string) => value.trim()
 					})}
 					type="text"
 					variant="outlined"
@@ -110,7 +114,8 @@ export const FormEditUser = () => {
 					fullWidth
 					required={true}
 					{...register('website', {
-						required: 'Campo requerido'
+						required: 'Campo requerido',
+						setValueAs: (value: string) => value.trim()
 					})}
 					type="text"
 					variant="outlined"
