@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-	baseURL: process.env.NEXT_PUBLIC_BACKEND
+	baseURL: 'https://jsonplaceholder.typicode.com'
 });
 
 export default axiosClient;

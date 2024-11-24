@@ -15,7 +15,7 @@ import {
 import WarningIcon from '@mui/icons-material/Warning';
 import { red } from '@mui/material/colors';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
-import { EnhancedTableHead, RowUsers } from '@/components/users/Table';
+import { AddUser, EnhancedTableHead, RowUsers } from '@/components/users/Table';
 import type { HeadCell, Order, UserStore } from '@/ts';
 
 const tableRowStyle = {
@@ -140,6 +140,8 @@ export const TableUsers = () => {
 
 	return (
 		<Box>
+			{!loading && <AddUser />}
+
 			{rows.length !== 0 && (
 				<TableContainer
 					component={Paper}

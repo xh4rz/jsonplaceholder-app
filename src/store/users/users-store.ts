@@ -12,10 +12,11 @@ interface State {
 	loadingUsers: boolean;
 	userDeleteId: number;
 	getUsers: () => Promise<void>;
-	setUserEditId: (idUser: number) => void;
-	setUserDeleteId: (idUser: number) => void;
+	addUser: (data: UserStore) => Promise<void>;
 	updateUser: (data: UserStore) => Promise<void>;
 	deleteUser: () => Promise<void>;
+	setUserEditId: (idUser: number) => void;
+	setUserDeleteId: (idUser: number) => void;
 }
 
 export const useUsersStore = create<State>()(
@@ -75,6 +76,32 @@ export const useUsersStore = create<State>()(
 			}
 		},
 
+		addUser: async (dataUser) => {
+			try {
+				const {
+					data: { id, ...rest }
+				} = await axiosClient.post<UserStore>(`/users`, dataUser);
+
+				const { users } = get();
+
+				const addUser = {
+					id: users.length + 1,
+					...rest
+				};
+
+				set({ users: [...users, addUser] });
+
+				showToast(
+					`Se ha agregado el usuario con el Id ${addUser.id}`,
+					'success'
+				);
+
+				useDialogsStore.getState().setAddDialog(false);
+			} catch (error) {
+				showToast('No se ha podido actualizar el usuario.', 'error');
+			}
+		},
+
 		setUserEditId: (idUser) => {
 			const { users } = get();
 
@@ -92,7 +119,7 @@ export const useUsersStore = create<State>()(
 
 		updateUser: async (dataUser) => {
 			try {
-				const { data } = await axiosClient.put(
+				const { data } = await axiosClient.put<UserStore>(
 					`/users/${dataUser.id}`,
 					dataUser
 				);

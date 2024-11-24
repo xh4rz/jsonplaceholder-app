@@ -122,7 +122,7 @@ export const FormEditUser = () => {
 			</Grid>
 
 			<Grid size={3}>
-				<CustomButton title="Guardar" icon={SaveIcon} type="submit" />
+				<CustomButton title="Actualizar" icon={SaveIcon} type="submit" />
 			</Grid>
 
 			<Grid size={3}>

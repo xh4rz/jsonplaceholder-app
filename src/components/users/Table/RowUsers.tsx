@@ -63,7 +63,7 @@ export const RowUsers = ({ i, headCells }: Props) => {
 					))}
 
 					<TableCell align="center">
-						<Tooltip title="Editar Usuario" placement="right">
+						<Tooltip title="Editar Usuario" placement="left">
 							<IconButton onClick={() => handleEditUser(i.id)}>
 								<EditIcon color="primary" />
 							</IconButton>
@@ -71,7 +71,7 @@ export const RowUsers = ({ i, headCells }: Props) => {
 					</TableCell>
 
 					<TableCell align="center">
-						<Tooltip title="Eliminar Usuario" placement="left">
+						<Tooltip title="Eliminar Usuario" placement="right">
 							<IconButton onClick={() => handleDeleteUser(i.id)}>
 								<DeleteIcon color={'error'} />
 							</IconButton>
