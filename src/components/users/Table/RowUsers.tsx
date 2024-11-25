@@ -54,10 +54,7 @@ export const RowUsers = ({ i, headCells }: Props) => {
 			{!loading && (
 				<>
 					{Object.values(i).map((param, index) => (
-						<TableCell
-							key={`${i.id}${param}`}
-							align={index === 0 ? 'center' : 'left'}
-						>
+						<TableCell key={index} align={index === 0 ? 'center' : 'left'}>
 							{param}
 						</TableCell>
 					))}

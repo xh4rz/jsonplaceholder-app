@@ -84,8 +84,10 @@ export const useUsersStore = create<State>()(
 
 				const { users } = get();
 
+				const newId = users[users.length - 1]?.id + 1 || 1;
+
 				const addUser = {
-					id: users.length + 1,
+					id: newId,
 					...rest
 				};
 
@@ -98,7 +100,7 @@ export const useUsersStore = create<State>()(
 
 				useDialogsStore.getState().setAddDialog(false);
 			} catch (error) {
-				showToast('No se ha podido actualizar el usuario.', 'error');
+				showToast('No se ha podido crear el usuario.', 'error');
 			}
 		},
 

@@ -63,7 +63,7 @@ export const CustomDrawer = ({ openDrawer, setOpenDrawer }: Props) => {
 			id: 1,
 			title: 'Usuarios',
 			icon: PeopleIcon,
-			href: '/users'
+			href: '/usuarios'
 		}
 	]);
 
