@@ -117,7 +117,7 @@ export const TableUsers = () => {
 
 						.sort(getComparator(order, orderBy))
 						.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-				: rows,
+				: rows.sort(getComparator(order, orderBy)),
 		[rows, order, orderBy, page, rowsPerPage]
 	);
 
