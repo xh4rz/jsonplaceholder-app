@@ -4,6 +4,8 @@ Aplicación de usuarios usando la API de jsonplaceholder.
 
 https://jsonplaceholder-app-two.vercel.app/
 
+https://sonarcloud.io/summary/new_code?id=xh4rz_jsonplaceholder-app
+
 ## Instalación
 
 1. Clonar el repositorio
