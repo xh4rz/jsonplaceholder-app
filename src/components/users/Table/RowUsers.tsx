@@ -26,7 +26,7 @@ interface Props {
 export const RowUsers = ({ i, headCells }: Props) => {
 	const {
 		loadingUsers: loading,
-		setUserEditId,
+		setUserEdit,
 		setUserDeleteId
 	} = useUsersStore();
 
@@ -34,7 +34,7 @@ export const RowUsers = ({ i, headCells }: Props) => {
 
 	const handleEditUser = (id: number) => {
 		setEditDialog(true);
-		setUserEditId(id);
+		setUserEdit(id);
 	};
 
 	const handleDeleteUser = (id: number) => {

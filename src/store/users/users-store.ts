@@ -15,7 +15,7 @@ interface State {
 	addUser: (data: UserStore) => Promise<void>;
 	updateUser: (data: UserStore) => Promise<void>;
 	deleteUser: () => Promise<void>;
-	setUserEditId: (idUser: number) => void;
+	setUserEdit: (idUser: number) => void;
 	setUserDeleteId: (idUser: number) => void;
 }
 
@@ -36,41 +36,26 @@ export const useUsersStore = create<State>()(
 			try {
 				const { data } = await axiosClient.get<User[]>('/users');
 
-				if (data.length !== 0) {
-					const dataUsers = data.map(
-						({ id, name, email, address, phone, website }) => ({
-							id,
-							name,
-							email,
-							city: address.city,
-							phone,
-							website
-						})
-					);
+				const dataUsers = data.map(
+					({ id, name, email, address, phone, website }) => ({
+						id,
+						name,
+						email,
+						city: address.city,
+						phone,
+						website
+					})
+				);
 
-					set({
-						users: dataUsers
-					});
+				set({
+					users: dataUsers
+				});
 
-					await timeout(2000);
+				await timeout(2000);
 
-					showToast('Se ha encontrado información de los usuarios.', 'success');
-				} else {
-					set({ users: [] });
-
-					showToast(
-						'No se ha encontrado información de los usuarios.',
-						'error'
-					);
-				}
+				showToast('Se ha encontrado información de los usuarios.', 'success');
 			} catch (error) {
-				const err = error as AxiosError<Error>;
-
-				if (!err.response?.data) {
-					showToast(err.message, 'error');
-				} else {
-					showToast(err.response.data.message, 'error');
-				}
+				showToast('No se ha encontrado información de los usuarios.', 'error');
 			} finally {
 				set({ loadingUsers: false });
 			}
@@ -104,7 +89,7 @@ export const useUsersStore = create<State>()(
 			}
 		},
 
-		setUserEditId: (idUser) => {
+		setUserEdit: (idUser) => {
 			const { users } = get();
 
 			const findUser = users.find((i) => i.id === idUser);
@@ -120,14 +105,9 @@ export const useUsersStore = create<State>()(
 		},
 
 		updateUser: async (dataUser) => {
-			try {
-				const { data } = await axiosClient.put<UserStore>(
-					`/users/${dataUser.id}`,
-					dataUser
-				);
+			const { users } = get();
 
-				const { users } = get();
-
+			const onUpdateUsers = (data: UserStore) => {
 				const updateUsers = users.map((i) => {
 					if (i.id === dataUser.id) {
 						return data;
@@ -144,7 +124,23 @@ export const useUsersStore = create<State>()(
 				);
 
 				useDialogsStore.getState().setEditDialog(false);
+			};
+
+			try {
+				const { data } = await axiosClient.put<UserStore>(
+					`/users/${dataUser.id}`,
+					dataUser
+				);
+
+				onUpdateUsers(data);
 			} catch (error) {
+				// validar para poder actualizar los nuevos usuarios creados
+				if (dataUser.id > 10) {
+					onUpdateUsers(dataUser);
+
+					return;
+				}
+
 				showToast('No se ha podido actualizar el usuario.', 'error');
 			}
 		},
