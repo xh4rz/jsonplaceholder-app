@@ -1,5 +1,4 @@
 import axiosClient from '@/axios/axiosClient';
-import { AxiosError } from 'axios';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { showToast, timeout } from '@/utils';
