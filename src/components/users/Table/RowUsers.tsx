@@ -53,11 +53,12 @@ export const RowUsers = ({ i, headCells }: Props) => {
 		>
 			{!loading && (
 				<>
-					{Object.values(i).map((param, index) => (
-						<TableCell key={index} align={index === 0 ? 'center' : 'left'}>
-							{param}
-						</TableCell>
-					))}
+					<TableCell align="center">{i.id}</TableCell>
+					<TableCell>{i.name}</TableCell>
+					<TableCell>{i.email}</TableCell>
+					<TableCell>{i.city}</TableCell>
+					<TableCell>{i.phone}</TableCell>
+					<TableCell>{i.website}</TableCell>
 
 					<TableCell align="center">
 						<Tooltip title="Editar Usuario" placement="left">
