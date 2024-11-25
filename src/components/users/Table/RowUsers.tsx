@@ -44,7 +44,6 @@ export const RowUsers = ({ i, headCells }: Props) => {
 
 	return (
 		<StyledTableRow
-			key={i.id}
 			sx={{
 				'& td': {
 					border: '1px solid rgb(235, 235, 228, 0.5)'
